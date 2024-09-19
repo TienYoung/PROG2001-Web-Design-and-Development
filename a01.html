@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Assignment 01</title>
     </head>
     <body>
         <label for="usrname">Please enter your name</label>
-        <input type="text" id="usrname" name="usrname"/>
+        <input type="text" id="usrname" name="usrname" required/>
+        <p id="log"></p>
         <script>
+            usrname = document.getElementById("usrname");
+            log = document.getElementById("log");
+
+            usrname.addEventListener("input", () => {
+                report = usrname.reportValidity();
+                log.innerHTML = report;
+            });
+
         </script>
     </body>
 </html>
