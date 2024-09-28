@@ -4,19 +4,69 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <title>Assignment 01</title>
+        <script type="text/javascript">
+            var currentDiv = 1;
+            var randomValue;
+
+            function validateName()
+            {
+                var userName = document.getElementById("userName");
+                var error = document.getElementById("error");
+                if ((userName.value.trim()).length == 0)
+                {
+                    error.innerHTML = "Your name <b>cannot</b> be BLANK.";
+                    return;
+                }
+                var lettersNSpaces = /^[A-Za-z\s]+$/;
+                if(!userName.value.match(lettersNSpaces))
+                {
+                    error.innerHTML = "Your name must be made of <b>alpha</b> characters <u>only</u>.";
+                    return;
+                }
+                error.innerHTML = "";
+
+                if(currentDiv == 1)
+                {
+                    document.getElementById("section1").style.display = "none";
+		            document.getElementById("section2").style.display = "block";
+                    currentDiv = 2;
+                }
+            }
+
+            var minNum = 1;
+            var maxNum = 999;
+
+            function validateNumber()
+            {
+                var guessNumber = document.getElementById("guessNumber");
+                var error = document.getElementById("error");
+                if((guessNumber.value < minNum) || (guessNumber.value > maxNum))
+                {
+                    error.innerHTML = "The number <b>must</b> between " + minNum + " and " + maxNum + ".";
+                    return;
+                }
+                error.innerHTML = "";
+
+                
+            }
+        </script>
     </head>
     <body>
-        <label for="usrname">Please enter your name</label>
-        <input type="text" id="usrname" name="usrname" required/>
-        <p id="log"></p>
-        <script>
-            usrname = document.getElementById("usrname");
-            log = document.getElementById("log");
-
-            usrname.addEventListener("input", () => {
-                report = usrname.reportValidity();
-                log.innerHTML = report;
-            });
-        </script>
+        <div id="section1">
+            <label for="userName">Please enter your name</label>
+            <input type="text" id="userName" name="userName"/>
+            <button onclick="validateName();">confirm</button>
+        </div>
+        <div id="section2" style="display:none">
+            <label for="maxNumber">Enter a number</label>
+            <input type="number" id="maxNumber" name="maxNumber"/>
+            <button onclick="validateNumber();">confirm</button>
+        </div>
+        <div id="section3" style="display:none">
+            <label for="guessNumber"></label>
+            <input type="number" id="guessNumber" name="guessNumber"/>
+            <button onclick="validateNumber();">confirm</button>
+        </div>
+        <div id="error" style="color:red;"></div>
     </body>
 </html>
