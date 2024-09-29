@@ -6,7 +6,7 @@
         <title>Assignment 01</title>
         <script type="text/javascript">
             var currentDiv = 1;
-            var randomValue;
+            var currentName;
 
             function validateName()
             {
@@ -30,24 +30,82 @@
                     document.getElementById("section1").style.display = "none";
 		            document.getElementById("section2").style.display = "block";
                     currentDiv = 2;
+                    currentName = userName.value;
                 }
             }
 
             var minNum = 1;
             var maxNum = 999;
+            var randomValue;
 
-            function validateNumber()
+            function validateMaxNumber()
+            {
+                var maxNumber = document.getElementById("maxNumber");
+                var error = document.getElementById("error");
+                var maxValue = maxNumber.value;
+                if((maxValue < 1) || (maxValue > 999))
+                {
+                    error.innerHTML = "The number <b>must</b> between 1 and 999.";
+                    return;
+                }
+                error.innerHTML = "";
+                
+                if(currentDiv == 2)
+                {
+                    document.getElementById("section2").style.display = "none";
+		            document.getElementById("section3").style.display = "block";
+                    currentDiv = 3;
+
+                    maxNum = maxValue;
+                    document.getElementById("guessNumberLabel").textContent = currentName + ", guess a number("+minNum+" - "+maxNum+")";
+                    maxNumber.value = "";
+                    randomValue = Math.floor(Math.random() * maxNum) + minNum;
+                }
+            }
+        
+            function validateGuessNumber()
             {
                 var guessNumber = document.getElementById("guessNumber");
                 var error = document.getElementById("error");
-                if((guessNumber.value < minNum) || (guessNumber.value > maxNum))
+                var guessValue = parseInt(guessNumber.value);
+                if((guessValue < minNum) || (guessValue > maxNum))
                 {
                     error.innerHTML = "The number <b>must</b> between " + minNum + " and " + maxNum + ".";
                     return;
                 }
                 error.innerHTML = "";
-
                 
+                console.log("Guess:" + guessValue + typeof(guessValue));
+                console.log("Random:"+ randomValue + typeof(randomValue));
+                
+                if (guessValue < randomValue)
+                {
+                    minNum = guessValue + 1;
+                    guessNumber.value = ""
+                    document.getElementById("guessNumberLabel").textContent = currentName + ", guess a number(" + minNum + " - "+maxNum+")";
+                }
+                else if (guessValue > randomValue)
+                {
+                    maxNum = guessValue - 1;
+                    guessNumber.value = ""
+                    document.getElementById("guessNumberLabel").textContent = currentName + ", guess a number(" + minNum + " - "+maxNum+")";
+                }
+                else
+                {
+                    document.getElementById("section3").style.display = "none";
+		            document.getElementById("section4").style.display = "block";
+                    currentDiv = 4;
+                    guessNumber.value = ""
+                }
+            }
+
+            function playAgain()
+            {
+                document.getElementById("section4").style.display = "none";
+		        document.getElementById("section2").style.display = "block";
+                currentDiv = 2;
+                minNum = 1;
+                maxNum = 999;
             }
         </script>
     </head>
@@ -58,14 +116,18 @@
             <button onclick="validateName();">confirm</button>
         </div>
         <div id="section2" style="display:none">
-            <label for="maxNumber">Enter a number</label>
+            <label for="maxNumber">Enter a number(1~999)</label>
             <input type="number" id="maxNumber" name="maxNumber"/>
-            <button onclick="validateNumber();">confirm</button>
+            <button onclick="validateMaxNumber();">confirm</button>
         </div>
         <div id="section3" style="display:none">
-            <label for="guessNumber"></label>
+            <label id="guessNumberLabel" for="guessNumber"></label>
             <input type="number" id="guessNumber" name="guessNumber"/>
-            <button onclick="validateNumber();">confirm</button>
+            <button onclick="validateGuessNumber();">confirm</button>
+        </div>
+        <div id="section4" style="display:none; background-color:green;">
+            <div>Congradulations</div>
+            <button onclick="playAgain();">Play Again</button>
         </div>
         <div id="error" style="color:red;"></div>
     </body>
