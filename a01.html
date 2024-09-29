@@ -94,6 +94,7 @@
                 {
                     document.getElementById("section3").style.display = "none";
 		            document.getElementById("section4").style.display = "block";
+                    document.body.style.backgroundColor = "green";
                     currentDiv = 4;
                     guessNumber.value = ""
                 }
@@ -103,6 +104,7 @@
             {
                 document.getElementById("section4").style.display = "none";
 		        document.getElementById("section2").style.display = "block";
+                document.body.style.backgroundColor = "";
                 currentDiv = 2;
                 minNum = 1;
                 maxNum = 999;
@@ -123,10 +125,10 @@
         <div id="section3" style="display:none">
             <label id="guessNumberLabel" for="guessNumber"></label>
             <input type="number" id="guessNumber" name="guessNumber"/>
-            <button onclick="validateGuessNumber();">confirm</button>
+            <button onclick="validateGuessNumber();">Make this Guess</button>
         </div>
-        <div id="section4" style="display:none; background-color:green;">
-            <div>Congradulations</div>
+        <div id="section4" style="display:none">
+            <div>You Win!! You guessed the number!!</div>
             <button onclick="playAgain();">Play Again</button>
         </div>
         <div id="error" style="color:red;"></div>
