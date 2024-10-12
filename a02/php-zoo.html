@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Assignment 02</title>
+    <script type="text/javascript">
+        function validateName() {
+            var userName = document.getElementById("userName");
+            // Check if the name is blank
+            if ((userName.value.trim()).length == 0) {
+                return;
+            }
+            // Check if the name contains only letters and spaces
+            var lettersNSpaces = /^[A-Za-z\s]+$/;
+            if (!userName.value.match(lettersNSpaces)) {
+                return;
+            }
+            console.log(userName);
+
+            // document.getElementById("section1").style.display = "none";
+            document.getElementById("section2").style.display = "block";
+        }
+        function validateAnimal() {
+            var animal = document.getElementById("animal");
+            if (animal.value == "") {
+                return;
+            }
+            console.log(animal);
+            document.getElementById("submit").hidden = false;
+        }
+    </script>
+</head>
+
+<body>
+    <form action="animals.php" method="post">
+        <div id="section1">
+            <label for="userName">Please enter your name</label>
+            <input type="text" id="userName" name="userName" />
+            <button type="button" onclick="validateName();">confirm</button>
+        </div>
+        <div id="section2" style="display:none">
+            <label for="animal">Animal:</label>
+            <select id="animal" name="animal" required=true>
+                <option value="">None</option>
+                <option value="tiger">Tiger</option>
+                <option value="elephent">Elephent</option>
+                <option value="monkey">Monkey</option>
+                <option value="flamingo">Flamingo</option>
+                <option value="giraffe">Giraffe</option>
+                <option value="hippopotamus">Hippopotamus</option>
+            </select>
+            <input type="submit" value="Submit" id="submit">
+        </div>
+    </form>
+</body>
+
+</html>
