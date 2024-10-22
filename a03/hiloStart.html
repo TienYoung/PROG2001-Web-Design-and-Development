@@ -4,100 +4,91 @@
         <meta charset="utf-8" />
         <title>Assignment 03</title>
         <script src="validation.js">
-            // Variables for the number range and the random target number
-            var minNum = 1;
-            var maxNum = 999;
-            var randomValue;
-
-            /**
-             * Validates the maximum number input and sets up the guessing stage
-             */
-            function validateMaxNumber()
-            {
-                var maxNumber = document.getElementById("maxNumber");
-                var error = document.getElementById("error");
-                var maxValue = maxNumber.value;
-                
-                // Check if the max number is within the allowed range
-                if((maxValue < 1) || (maxValue > 999))
-                {
-                    error.innerHTML = "The number <b>must</b> between 1 and 999.";
-                    return;
-                }
-                // Clear any previous error messages
-                error.innerHTML = "";
-                
-                // If we're in the second section, move to the third and set up the game
-                if(currentDiv == 2)
-                {
-                    document.getElementById("section2").style.display = "none";
-		            document.getElementById("section3").style.display = "block";
-                    currentDiv = 3;
-
-                    maxNum = maxValue;
-                    document.getElementById("guessNumberLabel").textContent = currentName + ", guess a number("+minNum+" - "+maxNum+")";
-                    maxNumber.value = "";
-                    randomValue = Math.floor(Math.random() * maxNum) + minNum;
-                }
-            }
-        
-            /**
-             * Validates the user's guess and provides feedback or ends the game
-             */
-            function validateGuessNumber()
-            {
-                var guessNumber = document.getElementById("guessNumber");
-                var error = document.getElementById("error");
-                var guessValue = parseInt(guessNumber.value);
-                // Check if the guess is within the current range
-                if((guessValue < minNum) || (guessValue > maxNum))
-                {
-                    error.innerHTML = "The number <b>must</b> between " + minNum + " and " + maxNum + ".";
-                    return;
-                }
-                // Clear any previous error messages
-                error.innerHTML = "";
-                
-                // console.log("Guess:" + guessValue + typeof(guessValue));
-                // console.log("Random:"+ randomValue + typeof(randomValue));
-                
-                // Compare the guess to the random value and update the game state
-                if (guessValue < randomValue)
-                {
-                    minNum = guessValue + 1;
-                    guessNumber.value = ""
-                    document.getElementById("guessNumberLabel").textContent = currentName + ", guess a number(" + minNum + " - "+maxNum+")";
-                }
-                else if (guessValue > randomValue)
-                {
-                    maxNum = guessValue - 1;
-                    guessNumber.value = ""
-                    document.getElementById("guessNumberLabel").textContent = currentName + ", guess a number(" + minNum + " - "+maxNum+")";
-                }
-                else
-                {
-                    // Correct guess - end the game
-                    document.getElementById("section3").style.display = "none";
-		            document.getElementById("section4").style.display = "block";
-                    document.body.style.backgroundColor = "green";
-                    currentDiv = 4;
-                    guessNumber.value = ""
-                }
-            }
-
-            /**
-             * Resets the game state to play again
-             */
-            function playAgain()
-            {
-                document.getElementById("section4").style.display = "none";
-		        document.getElementById("section2").style.display = "block";
-                document.body.style.backgroundColor = "";
-                currentDiv = 2;
-                minNum = 1;
-                maxNum = 999;
-            }
         </script>
+        <style>
+            h1 {
+                text-align: center;
+                color: black;
+                margin-bottom: 20px;
+            }
+
+            body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; 
+            margin: 0;
+            font-family: Arial, sans-serif;
+            }
+
+            form#startForm {
+                display: flex;
+                align-items: center;
+                border: 2px solid #007bff;
+                border-radius: 10px;
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                max-width: 400px;
+            }
+            
+            form#startForm div {
+            display: flex;
+            align-items: center;
+            }
+
+            form#startForm label {
+            margin-right: 10px;
+            }
+
+            form#startForm input {
+            margin-right: 10px;
+            }
+
+            form#startForm button {
+            margin-left: 10px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: bold;
+                color: #333;
+            }
+    
+            input[type="text"] {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+    
+            button {
+                width: 100%;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: #007bff;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+    
+            button:hover {
+                background-color: #0056b3;
+            }
+    
+            #errorMessage {
+                margin-top: 10px;
+                color: red;
+                font-size: 14px;
+            }
+        </style>
+        <h1> Welcome to the hi-lo!</h1>
     </head>
     <body>
         <form id="startForm" action="setMax.asp" method="post">
