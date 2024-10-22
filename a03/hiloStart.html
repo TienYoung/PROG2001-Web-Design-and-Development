@@ -2,46 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>Assignment 01</title>
-        <script type="text/javascript">
-            // Global variables to track game state
-            var currentDiv = 1;
-            var currentName;
-
-            /**
-             * Validates the user's name input and proceeds to the next stage if valid
-             */
-            function validateName()
-            {
-                var userName = document.getElementById("userName");
-                var error = document.getElementById("error");
-                // Check if the name is blank
-                if ((userName.value.trim()).length == 0)
-                {
-                    error.innerHTML = "Your name <b>cannot</b> be BLANK.";
-                    return;
-                }
-                // Check if the name contains only letters and spaces
-                var lettersNSpaces = /^[A-Za-z\s]+$/;
-                if(!userName.value.match(lettersNSpaces))
-                {
-                    error.innerHTML = "Your name must be made of <b>alpha</b> characters <u>only</u>.";
-                    return;
-                }
-                // Clear any previous error messages
-                error.innerHTML = "";
-
-                // If we're in the first section, move to the second
-                if(currentDiv == 1)
-                {
-                    document.getElementById("section1").style.display = "none";
-		            document.getElementById("section2").style.display = "block";
-                    currentDiv = 2;
-                    currentName = userName.value;
-                }
-            }
-
+        <title>Assignment 03</title>
+        <script src="validation.js">
             // Variables for the number range and the random target number
             var minNum = 1;
             var maxNum = 999;
@@ -138,30 +100,19 @@
         </script>
     </head>
     <body>
-        <!-- Section 1: Name Input -->
-        <div id="section1">
-            <label for="userName">Please enter your name</label>
-            <input type="text" id="userName" name="userName"/>
-            <button onclick="validateName();">confirm</button>
-        </div>
-        <!-- Section 2: Number Input -->
-        <div id="section2" style="display:none">
-            <label for="maxNumber">Enter a number(1~999)</label>
-            <input type="number" id="maxNumber" name="maxNumber"/>
-            <button onclick="validateMaxNumber();">confirm</button>
-        </div>
-        <!-- Section 3: Guess Prompt -->
-        <div id="section3" style="display:none">
-            <label id="guessNumberLabel" for="guessNumber"></label>
-            <input type="number" id="guessNumber" name="guessNumber"/>
-            <button onclick="validateGuessNumber();">Make this Guess</button>
-        </div>
-        <!-- Section 4: Win Message and Play Again -->
-        <div id="section4" style="display:none">
-            <div>You Win!! You guessed the number!!</div>
-            <button onclick="playAgain();">Play Again</button>
-        </div>
+        <form id="startForm" action="setMax.asp" method="post">
+            <div>
+                <label for="userName">User Name:</label>
+                <input type="text" id="userName" name="userName"/>
+                <button type="button" onclick="
+                var [passed, feedback] = validateName(userName.value);
+                errorMessage.innerHTML = feedback;
+                if(passed) startForm.submit()">Confirm</button>
+            </div>
+        </form>
+
         <!-- Error message container -->
-        <div id="error" style="color:red;"></div>
+        <br>
+        <div id="errorMessage" style="color:red;"></div>
     </body>
 </html>
