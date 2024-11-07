@@ -121,7 +121,8 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Hi-Lo.aspx" />
+    <Content Include="SetGame.aspx" />
+    <Content Include="StartGame.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -150,6 +151,7 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Hi-Lo.Master" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -210,12 +212,26 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hi-Lo.aspx.cs">
-      <DependentUpon>Hi-Lo.aspx</DependentUpon>
+    <Compile Include="Hi-Lo.Master.cs">
+      <DependentUpon>Hi-Lo.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Hi-Lo.aspx.designer.cs">
-      <DependentUpon>Hi-Lo.aspx</DependentUpon>
+    <Compile Include="Hi-Lo.Master.designer.cs">
+      <DependentUpon>Hi-Lo.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SetGame.aspx.cs">
+      <DependentUpon>SetGame.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SetGame.aspx.designer.cs">
+      <DependentUpon>SetGame.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StartGame.aspx.cs">
+      <DependentUpon>StartGame.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StartGame.aspx.designer.cs">
+      <DependentUpon>StartGame.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">

@@ -1,14 +1,18 @@
-﻿<%@ Page Title="Hi-Lo" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Hi-Lo.aspx.cs" Inherits="a04.Hi_Lo" %>
+﻿<%@ Page Title="Start Game" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StartGame.aspx.cs" Inherits="a04.Hi_Lo" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main>
         <h2 id="title"><%: Title %>.</h2>
-        <div>
-            <label for="userName">Please enter your name</label>
+        <p>
+            <asp:Label for="txtUserName" runat="server">Please enter your name</asp:Label>
             <asp:TextBox ID="txtUserName" runat="server"></asp:TextBox>
-            <button>confirm</button>
-        </div>
-        <div>
+            <asp:Button
+                ID="btnConfirm"
+                runat="server"
+                Text="Confirm"
+                OnClick="btnConfirm_Click"></asp:Button>
+        </p>
+        <p>
             <asp:RequiredFieldValidator
                 ID="rfvUserName"
                 runat="server"
@@ -17,6 +21,6 @@
                 ForeColor="Red"
                 Display="Dynamic">
             </asp:RequiredFieldValidator>
-        </div>
+        </p>
     </main>
 </asp:Content>
