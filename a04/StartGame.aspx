@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Start Game" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StartGame.aspx.cs" Inherits="a04.Hi_Lo" %>
+﻿<%@ Page Title="Start Game" Language="C#" MasterPageFile="~/Hi-Lo.Master" AutoEventWireup="true" CodeBehind="StartGame.aspx.cs" Inherits="a04.Hi_Lo" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main>

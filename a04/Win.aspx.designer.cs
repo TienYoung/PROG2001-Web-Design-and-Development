@@ -11,7 +11,7 @@ namespace a04
 {
 
 
-    public partial class SetGame
+    public partial class Win
     {
     }
 }

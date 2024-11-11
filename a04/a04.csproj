@@ -121,7 +121,8 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="SetGame.aspx" />
+    <Content Include="Guess.aspx" />
+    <Content Include="SetMax.aspx" />
     <Content Include="StartGame.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -152,6 +153,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Hi-Lo.Master" />
+    <Content Include="Win.aspx" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -212,6 +214,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Guess.aspx.cs">
+      <DependentUpon>Guess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Guess.aspx.designer.cs">
+      <DependentUpon>Guess.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Hi-Lo.Master.cs">
       <DependentUpon>Hi-Lo.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -219,12 +228,12 @@
     <Compile Include="Hi-Lo.Master.designer.cs">
       <DependentUpon>Hi-Lo.Master</DependentUpon>
     </Compile>
-    <Compile Include="SetGame.aspx.cs">
-      <DependentUpon>SetGame.aspx</DependentUpon>
+    <Compile Include="SetMax.aspx.cs">
+      <DependentUpon>SetMax.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SetGame.aspx.designer.cs">
-      <DependentUpon>SetGame.aspx</DependentUpon>
+    <Compile Include="SetMax.aspx.designer.cs">
+      <DependentUpon>SetMax.aspx</DependentUpon>
     </Compile>
     <Compile Include="StartGame.aspx.cs">
       <DependentUpon>StartGame.aspx</DependentUpon>
@@ -254,6 +263,13 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Win.aspx.cs">
+      <DependentUpon>Win.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Win.aspx.designer.cs">
+      <DependentUpon>Win.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
