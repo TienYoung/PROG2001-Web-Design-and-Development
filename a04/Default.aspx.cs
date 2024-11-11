@@ -13,5 +13,14 @@ namespace a04
         {
 
         }
+
+        protected void btnConfirm_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                Session["UserName"] = txtUserName.Text;
+                Response.Redirect("SetMax.aspx");
+            }
+        }
     }
 }
