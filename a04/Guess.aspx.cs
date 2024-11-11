@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * FILE          : Guess.aspx.cs
+ * PROJECT       : PROG2001 - Assignment #4
+ * PROGRAMMER    : Tian Yang
+ * FIRST VERSION : 2024-11-05
+ * DESCRIPTION   : 
+ *   This file is the code-behind for the Guess.aspx page, where the user enters their guess. 
+ *   It handles the validation of the guess, adjusts the range based on the input, and checks 
+ *   if the guess matches the randomly chosen number, redirecting to Win.aspx if correct.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;

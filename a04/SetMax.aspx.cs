@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * FILE          : SetMax.aspx.cs
+ * PROJECT       : PROG2001 - Assignment #4
+ * PROGRAMMER    : Tian Yang
+ * FIRST VERSION : 2024-11-05
+ * DESCRIPTION   : 
+ *   This file contains the code-behind for the SetMax.aspx page, where the user sets the maximum 
+ *   number for the guessing game. It initializes session variables for the game range and generates
+ *   a random number within the specified limit before redirecting to Guess.aspx.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;

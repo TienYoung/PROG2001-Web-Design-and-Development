@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * FILE          : Win.aspx.cs
+ * PROJECT       : PROG2001 - Assignment #4
+ * PROGRAMMER    : Tian Yang
+ * FIRST VERSION : 2024-11-05
+ * DESCRIPTION   : 
+ *   This file is the code-behind for the Win.aspx page, which displays the result when a user
+ *   successfully guesses the number. It also resets the session state to allow a new game 
+ *   to be started.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,6 +29,7 @@ namespace a04
             }
         }
 
+        // Clear session variables.
         protected void btnConfirm_Click(object sender, EventArgs e)
         {
             Session.Remove("RandomNumber");
