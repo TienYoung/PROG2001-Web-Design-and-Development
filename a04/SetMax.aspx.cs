@@ -9,9 +9,13 @@ namespace a04
 {
     public partial class SetGame : System.Web.UI.Page
     {
+        protected string UserName => Session["UserName"].ToString();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (!IsPostBack)
+            {
+                Page.DataBind();
+            }
         }
 
         protected void btnConfirm_Click(object sender, EventArgs e)
