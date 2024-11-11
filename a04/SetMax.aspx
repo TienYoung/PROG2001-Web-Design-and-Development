@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Set Max Number" Language="C#" MasterPageFile="~/Hi-Lo.Master" AutoEventWireup="true" CodeBehind="SetMax.aspx.cs" Inherits="a04.SetGame" %>
+﻿<%@ Page Title="Game Setting" Language="C#" MasterPageFile="~/Hi-Lo.Master" AutoEventWireup="true" CodeBehind="SetMax.aspx.cs" Inherits="a04.SetGame" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main>

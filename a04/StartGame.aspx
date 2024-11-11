@@ -4,7 +4,7 @@
     <main>
         <h2 id="title"><%: Title %>.</h2>
         <p>
-            <asp:Label for="txtUserName" runat="server">Please enter your name</asp:Label>
+            <asp:Label for="txtUserName" runat="server">User Name:</asp:Label>
             <asp:TextBox ID="txtUserName" runat="server"></asp:TextBox>
             <asp:Button
                 ID="btnConfirm"

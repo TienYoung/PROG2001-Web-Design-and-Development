@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main>
-        <h2 id="title"><%: Title %>.</h2>
+        <h2 id="title"><%: "Hello " + UserName + ", let's play hi-lo!"%>.</h2>
         <p>
             <asp:Label for="txtGuessNumber" runat="server">Guess a number(<%# Min + "~" + Max%>).</asp:Label>
             <asp:TextBox ID="txtGuessNumber" runat="server"></asp:TextBox>

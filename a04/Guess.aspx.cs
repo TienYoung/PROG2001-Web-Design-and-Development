@@ -9,12 +9,16 @@ namespace a04
 {
     public partial class Guess : System.Web.UI.Page
     {
-        protected int Min { get => Convert.ToInt32(Session["MinNumber"]); }
-        protected int Max { get => Convert.ToInt32(Session["MaxNumber"]); }
+        protected string UserName => Session["UserName"].ToString();
+        protected int Min => Convert.ToInt32(Session["MinNumber"]); 
+        protected int Max => Convert.ToInt32(Session["MaxNumber"]);
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.DataBind();
+            if (!IsPostBack)
+            {
+                Page.DataBind();
+            }
         }
 
         protected void btnConfirm_Click(object sender, EventArgs e)
