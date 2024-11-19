@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace a05
+namespace myOwnWebServer
 {
     internal class Program
     {

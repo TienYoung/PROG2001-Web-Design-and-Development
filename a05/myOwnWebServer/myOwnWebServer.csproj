@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4614010B-045F-4AA7-AC12-9672EECF48F8}</ProjectGuid>
+    <ProjectGuid>{DB55A806-19C7-4576-977D-6AD5509A962B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>a05</RootNamespace>
-    <AssemblyName>a05</AssemblyName>
+    <RootNamespace>myOwnWebServer</RootNamespace>
+    <AssemblyName>myOwnWebServer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
