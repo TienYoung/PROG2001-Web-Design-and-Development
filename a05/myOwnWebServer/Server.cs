@@ -98,7 +98,7 @@ namespace myOwnWebServer
                 netStream.Write(data, 0, data.Length);
                 fileStream.CopyTo(netStream);
 
-                logger.Write("[RESPONSE]", "HTTP/1.1 200 OK");
+                logger.Write("[RESPONSE]", "HTTP/1.1 200 OK", responseDict);
             }
         }
 
@@ -139,80 +139,77 @@ namespace myOwnWebServer
             logger.Write("[RESPONSE]", "HTTP/1.1 405 Method Not Allowed");
         }
 
-
         internal void Run()
         {
             while (true)
             {
-                using (TcpClient client = listener.AcceptTcpClient())
+                TcpClient client = listener.AcceptTcpClient();
+                NetworkStream netStream = client.GetStream();
+                string request = ReceiveMessage(netStream, client.ReceiveBufferSize);
+                logger.Write("[REQUEST]", request.Split(new[] { '\r', '\n' })[0]);
+
+                Dictionary<string, string> requestDict = ParseRequestHeader(request);
+                if (requestDict["Method"] == "GET")
                 {
-                    using (NetworkStream netStream = client.GetStream())
+                    string url = root;
+                    if (requestDict["URL"] == "/")
                     {
-                        string request = ReceiveMessage(netStream, client.ReceiveBufferSize);
+                        url += "/index.html";
+                    }
+                    else
+                    {
+                        url += requestDict["URL"];
+                    }
 
-                        logger.Write("[REQUEST]", request.Split(new[] { '\r', '\n' })[0]);
+                    string contentType = null;
+                    string ext = Path.GetExtension(url);
+                    switch (ext)
+                    {
+                        case ".gif":
+                            contentType = "image/gif";
+                            break;
+                        case ".htm":
+                        case ".html":
+                        case ".htmls":
+                            contentType = "text/html";
+                            break;
+                        case ".jpg":
+                        case ".jpeg":
+                            contentType = "image/jpeg";
+                            break;
+                        case ".png":
+                            contentType = "image/png";
+                            break;
+                        case ".txt":
+                            contentType = "image/plain";
+                            break;
+                    }
 
-                        Dictionary<string, string> requestDict = ParseRequestHeader(request);
-
-                        if (requestDict["Method"] == "GET")
-                        {
-
-
-                            string url = root;
-                            if (requestDict["URL"] == "/")
-                            {
-                                url += "/index.html";
-                            }
-                            else
-                            {
-                                url += requestDict["URL"];
-                            }
-
-                            string contentType = null;
-                            string ext = Path.GetExtension(url);
-                            switch (ext)
-                            {
-                                case ".gif":
-                                    contentType = "image/gif";
-                                    break;
-                                case ".htm":
-                                case ".html":
-                                case ".htmls":
-                                    contentType = "text/html";
-                                    break;
-                                case ".jpg":
-                                case ".jpeg":
-                                    contentType = "image/jpeg";
-                                    break;
-                                case ".png":
-                                    contentType = "image/png";
-                                    break;
-                                case ".txt":
-                                    contentType = "image/plain";
-                                    break;
-                            }
-
-                            try
-                            {
-                                ResponseFile(netStream, url, contentType);
-                            }
-                            catch (IOException e)
-                            {
-                                logger.Write("[IOException]", e.Message);
-                                Response404(netStream);
-                            }
-                            catch (UnauthorizedAccessException e)
-                            {
-                                logger.Write("[UnauthorizedAccessException]", e.Message);
-                                Response404(netStream);
-                            }
-                        }
-                        else
-                        {
-                            Response405(netStream);
-                        }
+                    try
+                    {
+                        ResponseFile(netStream, url, contentType);
+                    }
+                    catch (IOException e)
+                    {
+                        Console.Error.WriteLine(e);
+                        logger.Write("[IOException]", e.Message);
+                        Response404(netStream);
+                    }
+                    catch (UnauthorizedAccessException e)
+                    {
+                        Console.Error.WriteLine(e);
+                        logger.Write("[UnauthorizedAccessException]", e.Message);
+                        Response404(netStream);
                     }
                 }
+                else
+                {
+                    Response405(netStream);
+                }
+
+                // Clear resources
+                netStream.Close();
+                client.Close();
             }
         }
     }
