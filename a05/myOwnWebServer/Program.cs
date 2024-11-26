@@ -36,7 +36,7 @@ namespace myOwnWebServer
                         string request = System.Text.Encoding.ASCII.GetString(data);
                         Console.WriteLine($"Request:\n{request}");
 
-                        Dictionary<string, string> headers = new Dictionary<string, string>();
+                        Dictionary<string, string> requestHeader = new Dictionary<string, string>();
 
                         string[] lines = request.Split('\n');
                         string[] parts = lines[0].Split(' ');
@@ -61,15 +61,21 @@ namespace myOwnWebServer
                                 throw new Exception("Header invalid!");
                             }
 
-                            headers.Add(parts[0], parts[1]);
+                            requestHeader.Add(parts[0], parts[1]);
                         }
+
+                        Dictionary<string, string> responseHeader = new Dictionary<string, string>();
 
                         string response = null;
                         if (method == "GET")
                         {
                             using (FileStream fileStream = new FileStream("." + path, FileMode.Open))
                             {
-                                response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: " + fileStream.Length + "\r\n\r\n";
+                                responseHeader["Response"] = "HTTP/1.1 200 OK";
+                                responseHeader["Content-Type"] = "text/html";
+                                responseHeader["Content-Length"] = fileStream.Length.ToString();
+                                response = GenerateResponseString(responseHeader);
+
                                 data = System.Text.Encoding.ASCII.GetBytes(response);
                                 netStream.Write(data, 0, data.Length);
                                 fileStream.CopyTo(netStream);
@@ -87,6 +93,24 @@ namespace myOwnWebServer
                     }
                 }
             }
+        }
+
+        static Dictionary<string, string> ParseRequestHeader(string request)
+        {
+            return null;
+        }
+
+        static string GenerateResponseString(Dictionary<string, string> header)
+        {
+            string response = header["Response"] + "\r\n";
+            header.Remove("Response");
+            foreach (var message in header)
+            {
+                response += message.Key + ": " + message.Value + "\r\n";
+            }
+            response += "\r\n";
+
+            return response;
         }
     }
 }
