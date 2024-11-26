@@ -86,6 +86,8 @@ namespace myOwnWebServer
                                     responseDict["Connection"] = "Close";
                                     responseDict["Content-Type"] = contentType;
                                     responseDict["Content-Length"] = fileStream.Length.ToString();
+                                    responseDict["Date"] = DateTime.Now.ToUniversalTime().ToString("r");
+                                    responseDict["Server"] = "myOwnServer";
                                     response = GenerateResponseString(responseDict);
 
                                     data = System.Text.Encoding.ASCII.GetBytes(response);
@@ -104,6 +106,8 @@ namespace myOwnWebServer
                                     responseDict["Connection"] = "Close";
                                     responseDict["Content-Type"] = "text/html";
                                     responseDict["Content-Length"] = fileStream.Length.ToString();
+                                    responseDict["Date"] = DateTime.Now.ToUniversalTime().ToString("r");
+                                    responseDict["Server"] = "myOwnServer";
                                     response = GenerateResponseString(responseDict);
 
                                     data = System.Text.Encoding.ASCII.GetBytes(response);
@@ -120,6 +124,9 @@ namespace myOwnWebServer
                                 responseDict["Response"] = "HTTP/1.1 404 Not Found";
                                 responseDict["Connection"] = "Close";
                                 responseDict["Content-Length"] = "0";
+                                responseDict["Content-Type"] = "text/html";
+                                responseDict["Date"] = DateTime.Now.ToUniversalTime().ToString("r");
+                                responseDict["Server"] = "myOwnServer";
                                 response = GenerateResponseString(responseDict);
 
                                 data = System.Text.Encoding.ASCII.GetBytes(response);
