@@ -15,7 +15,7 @@ namespace myOwnWebServer
             logFilename = filename;
             using (StreamWriter logStream = new StreamWriter(logFilename))
             {
-                // Clear log when start
+                // Clear log when started
             }
         }
 

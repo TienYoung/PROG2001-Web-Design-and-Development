@@ -21,7 +21,7 @@ namespace myOwnWebServer
             listener = new TcpListener(IPAddress.Parse(ip), Convert.ToInt32(port));
             listener.Start();
             root = webRoot;
-            logger.Write("[SERVER STARTED]", ip + ":" + port + " "+ Path.GetFullPath(webRoot));
+            logger.Write("[SERVER STARTED]", ip + ":" + port + " " + Path.GetFullPath(webRoot));
         }
 
         private Dictionary<string, string> ParseRequestHeader(string request)
@@ -70,9 +70,41 @@ namespace myOwnWebServer
             return response;
         }
 
+        private string ReceiveMessage(NetworkStream netStream, int size)
+        {
+            byte[] buffer = new byte[size];
+            StringBuilder message = new StringBuilder();
+            int readSize = netStream.Read(buffer, 0, size);
+
+            message.Append(Encoding.ASCII.GetString(buffer, 0, readSize));
+
+            return message.ToString();
+        }
+
+        private void ResponseFile(NetworkStream netStream, string filename, string contentType)
+        {
+            using (FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                Dictionary<string, string> responseDict = new Dictionary<string, string>();
+                responseDict["Response"] = "HTTP/1.1 200 OK";
+                responseDict["Connection"] = "Close";
+                responseDict["Content-Type"] = contentType;
+                responseDict["Content-Length"] = fileStream.Length.ToString();
+                responseDict["Date"] = DateTime.Now.ToUniversalTime().ToString("r");
+                responseDict["Server"] = "myOwnServer";
+                string response = GenerateResponseString(responseDict);
+
+                byte[] data = System.Text.Encoding.ASCII.GetBytes(response);
+                netStream.Write(data, 0, data.Length);
+                fileStream.CopyTo(netStream);
+
+                logger.Write("[RESPONSE]", "HTTP/1.1 200 OK");
+            }
+        }
+
         private void Response404(NetworkStream netStream)
         {
-            using (FileStream fileStream = new FileStream(root + "/404.html", FileMode.Open))
+            using (FileStream fileStream = new FileStream(root + "/404.html", FileMode.Open, FileAccess.Read))
             {
                 Dictionary<string, string> responseDict = new Dictionary<string, string>();
                 responseDict["Response"] = "HTTP/1.1 404 Not Found";
@@ -116,17 +148,12 @@ namespace myOwnWebServer
                 {
                     using (NetworkStream netStream = client.GetStream())
                     {
-                        byte[] buffer = new byte[client.ReceiveBufferSize];
+                        string request = ReceiveMessage(netStream, client.ReceiveBufferSize);
 
-                        int readSize = netStream.Read(buffer, 0, client.ReceiveBufferSize);
-                        byte[] data = buffer.Take(readSize).ToArray();
-
-                        string request = System.Text.Encoding.ASCII.GetString(data);
                         logger.Write("[REQUEST]", request.Split(new[] { '\r', '\n' })[0]);
 
                         Dictionary<string, string> requestDict = ParseRequestHeader(request);
 
-                        string response = null;
                         if (requestDict["Method"] == "GET")
                         {
 
@@ -167,28 +194,16 @@ namespace myOwnWebServer
 
                             try
                             {
-                                using (FileStream fileStream = new FileStream(url, FileMode.Open))
-                                {
-                                    Dictionary<string, string> responseDict = new Dictionary<string, string>();
-                                    responseDict["Response"] = "HTTP/1.1 200 OK";
-                                    responseDict["Connection"] = "Close";
-                                    responseDict["Content-Type"] = contentType;
-                                    responseDict["Content-Length"] = fileStream.Length.ToString();
-                                    responseDict["Date"] = DateTime.Now.ToUniversalTime().ToString("r");
-                                    responseDict["Server"] = "myOwnServer";
-                                    response = GenerateResponseString(responseDict);
-
-                                    data = System.Text.Encoding.ASCII.GetBytes(response);
-                                    netStream.Write(data, 0, data.Length);
-                                    fileStream.CopyTo(netStream);
-
-                                    logger.Write("[RESPONSE]", "HTTP/1.1 200 OK");
-                                }
+                                ResponseFile(netStream, url, contentType);
                             }
                             catch (IOException e)
                             {
-                                logger.Write("[ERROR]", e.Message);
-
+                                logger.Write("[IOException]", e.Message);
+                                Response404(netStream);
+                            }
+                            catch (UnauthorizedAccessException e)
+                            {
+                                logger.Write("[UnauthorizedAccessException]", e.Message);
                                 Response404(netStream);
                             }
                         }
