@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * FILE          : Server.cs
+ * PROJECT       : PROG2001 - A5
+ * PROGRAMMER    : Tian Yang
+ * FIRST VERSION : 2024-11-19
+ * DESCRIPTION   :
+ *   This file defines the Server class, which handles incoming HTTP requests, processes them,
+ *   and sends appropriate responses. The server supports basic HTTP methods and handles errors
+ *   like 404 and 405. It uses the Logger class to record all activities and errors.
+ */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +19,14 @@ using System.Threading.Tasks;
 
 namespace myOwnWebServer
 {
+    /*
+     * NAME : Server
+     * PURPOSE :
+     *   The Server class implements the core functionality of the HTTP server. It listens for
+     *   incoming client connections, parses HTTP requests, serves files, and sends appropriate
+     *   responses. The class supports GET requests and handles file-serving logic, MIME types,
+     *   and errors gracefully.
+     */
     internal class Server
     {
         private Logger logger = null;
@@ -24,6 +42,16 @@ namespace myOwnWebServer
             logger.Write("[SERVER STARTED]", ip + ":" + port + " " + Path.GetFullPath(webRoot));
         }
 
+        //
+        // METHOD : ParseRequestHeader
+        // DESCRIPTION :
+        //   This method parses the raw HTTP request string and extracts key-value pairs
+        //   representing the HTTP headers, method, URL, and version.
+        // PARAMETERS :
+        //   string request : The raw HTTP request string from the client.
+        // RETURNS :
+        //   Dictionary<string, string> : A dictionary containing the parsed HTTP headers.
+        //
         private Dictionary<string, string> ParseRequestHeader(string request)
         {
             Dictionary<string, string> headerDict = new Dictionary<string, string>();
@@ -57,6 +85,15 @@ namespace myOwnWebServer
             return headerDict;
         }
 
+        //
+        // METHOD : GenerateResponseString
+        // DESCRIPTION :
+        //   This method constructs an HTTP response string using the provided headers and response code.
+        // PARAMETERS :
+        //   Dictionary<string, string> headerDict : A dictionary containing HTTP response headers.
+        // RETURNS :
+        //   string : The formatted HTTP response string.
+        //
         private string GenerateResponseString(Dictionary<string, string> headerDict)
         {
             string response = headerDict["Response"] + "\r\n";
@@ -70,6 +107,17 @@ namespace myOwnWebServer
             return response;
         }
 
+        //
+        // METHOD : ReceiveMessage
+        // DESCRIPTION :
+        //   This method reads a message from the given network stream. It retrieves up to the specified
+        //   number of bytes and returns the message as a string.
+        // PARAMETERS :
+        //   NetworkStream netStream : The network stream to read from.
+        //   int size                : The maximum number of bytes to read from the stream.
+        // RETURNS :
+        //   string : The message received from the network stream.
+        //
         private string ReceiveMessage(NetworkStream netStream, int size)
         {
             byte[] buffer = new byte[size];
@@ -81,6 +129,19 @@ namespace myOwnWebServer
             return message.ToString();
         }
 
+        //
+        // METHOD : ResponseFile
+        // DESCRIPTION :
+        //   This method sends an HTTP response to the client with the contents of the specified file.
+        //   It includes appropriate headers, such as Content-Type and Content-Length, and writes
+        //   the file content to the network stream.
+        // PARAMETERS :
+        //   NetworkStream netStream : The network stream to send the response to.
+        //   string filename         : The path of the file to be sent.
+        //   string contentType      : The MIME type of the file being served.
+        // RETURNS :
+        //   void : This method does not return a value.
+        //
         private void ResponseFile(NetworkStream netStream, string filename, string contentType)
         {
             using (FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
@@ -102,6 +163,16 @@ namespace myOwnWebServer
             }
         }
 
+        //
+        // METHOD : Response404
+        // DESCRIPTION :
+        //   This method sends a 404 Not Found HTTP response to the client. It includes a default
+        //   "404.html" file in the response body if available.
+        // PARAMETERS :
+        //   NetworkStream netStream : The network stream to send the response to.
+        // RETURNS :
+        //   void : This method does not return a value.
+        //
         private void Response404(NetworkStream netStream)
         {
             using (FileStream fileStream = new FileStream(root + "/404.html", FileMode.Open, FileAccess.Read))
@@ -123,6 +194,16 @@ namespace myOwnWebServer
             }
         }
 
+        //
+        // METHOD : Response405
+        // DESCRIPTION :
+        //   This method sends a 405 Method Not Allowed HTTP response to the client. It includes headers
+        //   indicating that the request method is not supported and an empty response body.
+        // PARAMETERS :
+        //   NetworkStream netStream : The network stream to send the response to.
+        // RETURNS :
+        //   void : This method does not return a value.
+        //
         private void Response405(NetworkStream netStream)
         {
             Dictionary<string, string> responseDict = new Dictionary<string, string>();
@@ -139,6 +220,17 @@ namespace myOwnWebServer
             logger.Write("[RESPONSE]", "HTTP/1.1 405 Method Not Allowed");
         }
 
+        //
+        // METHOD : Run
+        // DESCRIPTION :
+        //   This method runs the server in an infinite loop. It accepts client connections, reads
+        //   HTTP requests, processes them, and sends appropriate responses. The method supports GET
+        //   requests and handles errors like 404 and 405.
+        // PARAMETERS :
+        //   None
+        // RETURNS :
+        //   void : This method does not return a value.
+        //
         internal void Run()
         {
             while (true)
@@ -191,13 +283,11 @@ namespace myOwnWebServer
                     }
                     catch (IOException e)
                     {
-                        Console.Error.WriteLine(e);
                         logger.Write("[IOException]", e.Message);
                         Response404(netStream);
                     }
                     catch (UnauthorizedAccessException e)
                     {
-                        Console.Error.WriteLine(e);
                         logger.Write("[UnauthorizedAccessException]", e.Message);
                         Response404(netStream);
                     }
