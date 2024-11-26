@@ -20,7 +20,7 @@ namespace myOwnWebServer
             string webIP = Regex.Match(args[1], webIPPattern).Groups[1].Value;
             string webPort = Regex.Match(args[2], webPortPattern).Groups[1].Value;
 
-            Server server = new Server(webIP, webPort);
+            Server server = new Server(webIP, webPort, webRoot);
             server.Run();
         }
 

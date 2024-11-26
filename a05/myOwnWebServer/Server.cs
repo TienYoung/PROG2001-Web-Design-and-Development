@@ -13,12 +13,15 @@ namespace myOwnWebServer
     {
         private Logger logger = null;
         private TcpListener listener = null;
-        internal Server(string ip, string port)
+        private string root;
+
+        internal Server(string ip, string port, string webRoot)
         {
             logger = new Logger("./myOwnWebServer.log");
             listener = new TcpListener(IPAddress.Parse(ip), Convert.ToInt32(port));
             listener.Start();
-            logger.Write("[SERVER STARTED]", ip + ":" + port);
+            root = webRoot;
+            logger.Write("[SERVER STARTED]", ip + ":" + port + " "+ Path.GetFullPath(webRoot));
         }
 
         private Dictionary<string, string> ParseRequestHeader(string request)
@@ -67,6 +70,43 @@ namespace myOwnWebServer
             return response;
         }
 
+        private void Response404(NetworkStream netStream)
+        {
+            using (FileStream fileStream = new FileStream(root + "/404.html", FileMode.Open))
+            {
+                Dictionary<string, string> responseDict = new Dictionary<string, string>();
+                responseDict["Response"] = "HTTP/1.1 404 Not Found";
+                responseDict["Connection"] = "Close";
+                responseDict["Content-Type"] = "text/html";
+                responseDict["Content-Length"] = fileStream.Length.ToString();
+                responseDict["Date"] = DateTime.Now.ToUniversalTime().ToString("r");
+                responseDict["Server"] = "myOwnServer";
+                string response = GenerateResponseString(responseDict);
+
+                byte[] data = System.Text.Encoding.ASCII.GetBytes(response);
+                netStream.Write(data, 0, data.Length);
+                fileStream.CopyTo(netStream);
+
+                logger.Write("[RESPONSE]", "HTTP/1.1 404 Not Found");
+            }
+        }
+
+        private void Response405(NetworkStream netStream)
+        {
+            Dictionary<string, string> responseDict = new Dictionary<string, string>();
+            responseDict["Response"] = "HTTP/1.1 405 Method Not Allowed";
+            responseDict["Connection"] = "Close";
+            responseDict["Content-Length"] = "0";
+            responseDict["Date"] = DateTime.Now.ToUniversalTime().ToString("r");
+            responseDict["Server"] = "myOwnServer";
+            string response = GenerateResponseString(responseDict);
+
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(response);
+            netStream.Write(data, 0, data.Length);
+
+            logger.Write("[RESPONSE]", "HTTP/1.1 405 Method Not Allowed");
+        }
+
 
         internal void Run()
         {
@@ -91,7 +131,7 @@ namespace myOwnWebServer
                         {
 
 
-                            string url = "./webroot";
+                            string url = root;
                             if (requestDict["URL"] == "/")
                             {
                                 url += "/index.html";
@@ -149,43 +189,12 @@ namespace myOwnWebServer
                             {
                                 logger.Write("[ERROR]", e.Message);
 
-                                using (FileStream fileStream = new FileStream("./webroot/404.html", FileMode.Open))
-                                {
-                                    Dictionary<string, string> responseDict = new Dictionary<string, string>();
-                                    responseDict["Response"] = "HTTP/1.1 404 Not Found";
-                                    responseDict["Connection"] = "Close";
-                                    responseDict["Content-Type"] = "text/html";
-                                    responseDict["Content-Length"] = fileStream.Length.ToString();
-                                    responseDict["Date"] = DateTime.Now.ToUniversalTime().ToString("r");
-                                    responseDict["Server"] = "myOwnServer";
-                                    response = GenerateResponseString(responseDict);
-
-                                    data = System.Text.Encoding.ASCII.GetBytes(response);
-                                    netStream.Write(data, 0, data.Length);
-                                    fileStream.CopyTo(netStream);
-
-                                    logger.Write("[RESPONSE]", "HTTP/1.1 404 Not Found");
-                                }
+                                Response404(netStream);
                             }
                         }
                         else
                         {
-                            using (FileStream fileStream = new FileStream("./webroot/404.html", FileMode.Open))
-                            {
-                                Dictionary<string, string> responseDict = new Dictionary<string, string>();
-                                responseDict["Response"] = "HTTP/1.1 404 Not Found";
-                                responseDict["Connection"] = "Close";
-                                responseDict["Content-Length"] = "0";
-                                responseDict["Content-Type"] = "text/html";
-                                responseDict["Date"] = DateTime.Now.ToUniversalTime().ToString("r");
-                                responseDict["Server"] = "myOwnServer";
-                                response = GenerateResponseString(responseDict);
-
-                                data = System.Text.Encoding.ASCII.GetBytes(response);
-                                netStream.Write(data, 0, data.Length);
-
-                                logger.Write("[RESPONSE]", "HTTP/1.1 404 Not Found");
-                            }
+                            Response405(netStream);
                         }
                     }
                 }
