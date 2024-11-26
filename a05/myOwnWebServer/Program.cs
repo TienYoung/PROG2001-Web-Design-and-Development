@@ -34,24 +34,53 @@ namespace myOwnWebServer
                         byte[] data = buffer.Take(readSize).ToArray();
 
                         string request = System.Text.Encoding.ASCII.GetString(data);
-                        Console.WriteLine($"Request:\n{request}");
+                        Console.WriteLine(request);
 
                         Dictionary<string, string> requestDict = ParseRequestHeader(request);
 
                         string response = null;
                         if (requestDict["Method"] == "GET")
                         {
-                            using (FileStream fileStream = new FileStream("." + requestDict["URL"], FileMode.Open))
-                            {
-                                Dictionary<string, string> responseDict = new Dictionary<string, string>();
-                                responseDict["Response"] = "HTTP/1.1 200 OK";
-                                responseDict["Content-Type"] = "text/html";
-                                responseDict["Content-Length"] = fileStream.Length.ToString();
-                                response = GenerateResponseString(responseDict);
+                            Dictionary<string, string> responseDict = new Dictionary<string, string>();
 
-                                data = System.Text.Encoding.ASCII.GetBytes(response);
-                                netStream.Write(data, 0, data.Length);
-                                fileStream.CopyTo(netStream);
+                            string url = "." + requestDict["URL"];
+                            string ext = Path.GetExtension(url);
+                            switch (ext)
+                            {
+
+                                case "htm":
+                                case "html":
+                                case "htmls":
+                                    responseDict["Content-Type"] = "text/html";
+                                    break;
+                                case "jpg":
+                                case "jpeg":
+                                    responseDict["Content-Type"] = "image/jpeg";
+                                    break;
+                                case "png":
+                                    responseDict["Content-Type"] = "image/png";
+                                    break;
+                                case "gif":
+                                    responseDict["Content-Type"] = "image/gif";
+                                    break;
+                            }
+
+                            try
+                            {
+                                using (FileStream fileStream = new FileStream(url, FileMode.Open))
+                                {
+                                    responseDict["Response"] = "HTTP/1.1 200 OK";
+                                    responseDict["Content-Length"] = fileStream.Length.ToString();
+                                    response = GenerateResponseString(responseDict);
+
+                                    data = System.Text.Encoding.ASCII.GetBytes(response);
+                                    netStream.Write(data, 0, data.Length);
+                                    fileStream.CopyTo(netStream);
+                                }
+                            }
+                            catch (IOException e)
+                            {
+                                Console.Error.WriteLine(e.Message);
                             }
                         }
                         else
