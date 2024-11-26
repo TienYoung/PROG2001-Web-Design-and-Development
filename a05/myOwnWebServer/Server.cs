@@ -25,7 +25,7 @@ namespace myOwnWebServer
         {
             Dictionary<string, string> headerDict = new Dictionary<string, string>();
 
-            string[] lines = request.Split('\n');
+            string[] lines = request.Split(new[] { '\r', '\n' });
             string[] parts = lines[0].Split(' ');
             if (parts.Length != 3)
             {
@@ -82,7 +82,7 @@ namespace myOwnWebServer
                         byte[] data = buffer.Take(readSize).ToArray();
 
                         string request = System.Text.Encoding.ASCII.GetString(data);
-                        logger.Write("[REQUEST]", request);
+                        logger.Write("[REQUEST]", request.Split(new[] { '\r', '\n' })[0]);
 
                         Dictionary<string, string> requestDict = ParseRequestHeader(request);
 
@@ -142,7 +142,7 @@ namespace myOwnWebServer
                                     netStream.Write(data, 0, data.Length);
                                     fileStream.CopyTo(netStream);
 
-                                    logger.Write("[RESPONSE]", response);
+                                    logger.Write("[RESPONSE]", "HTTP/1.1 200 OK");
                                 }
                             }
                             catch (IOException e)
@@ -164,7 +164,7 @@ namespace myOwnWebServer
                                     netStream.Write(data, 0, data.Length);
                                     fileStream.CopyTo(netStream);
 
-                                    logger.Write("[RESPONSE]", response);
+                                    logger.Write("[RESPONSE]", "HTTP/1.1 404 Not Found");
                                 }
                             }
                         }
@@ -184,7 +184,7 @@ namespace myOwnWebServer
                                 data = System.Text.Encoding.ASCII.GetBytes(response);
                                 netStream.Write(data, 0, data.Length);
 
-                                logger.Write("[RESPONSE]", response);
+                                logger.Write("[RESPONSE]", "HTTP/1.1 404 Not Found");
                             }
                         }
                     }
