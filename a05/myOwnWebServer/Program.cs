@@ -41,27 +41,39 @@ namespace myOwnWebServer
                         string response = null;
                         if (requestDict["Method"] == "GET")
                         {
-                            Dictionary<string, string> responseDict = new Dictionary<string, string>();
+                            
 
-                            string url = "." + requestDict["URL"];
+                            string url = "./webroot";
+                            if (requestDict["URL"] == "/")
+                            {
+                                url += "/index.html";
+                            }
+                            else
+                            {
+                                url += requestDict["URL"];
+                            }
+
+                            string contentType = null;
                             string ext = Path.GetExtension(url);
                             switch (ext)
                             {
-
-                                case "htm":
-                                case "html":
-                                case "htmls":
-                                    responseDict["Content-Type"] = "text/html";
+                                case ".gif":
+                                    contentType = "image/gif";
                                     break;
-                                case "jpg":
-                                case "jpeg":
-                                    responseDict["Content-Type"] = "image/jpeg";
+                                case ".htm":
+                                case ".html":
+                                case ".htmls":
+                                    contentType = "text/html";
                                     break;
-                                case "png":
-                                    responseDict["Content-Type"] = "image/png";
+                                case ".jpg":
+                                case ".jpeg":
+                                    contentType = "image/jpeg";
                                     break;
-                                case "gif":
-                                    responseDict["Content-Type"] = "image/gif";
+                                case ".png":
+                                    contentType = "image/png";
+                                    break;
+                                case ".txt":
+                                    contentType = "image/plain";
                                     break;
                             }
 
@@ -69,7 +81,10 @@ namespace myOwnWebServer
                             {
                                 using (FileStream fileStream = new FileStream(url, FileMode.Open))
                                 {
+                                    Dictionary<string, string> responseDict = new Dictionary<string, string>();
                                     responseDict["Response"] = "HTTP/1.1 200 OK";
+                                    responseDict["Connection"] = "Close";
+                                    responseDict["Content-Type"] = contentType;
                                     responseDict["Content-Length"] = fileStream.Length.ToString();
                                     response = GenerateResponseString(responseDict);
 
@@ -81,18 +96,35 @@ namespace myOwnWebServer
                             catch (IOException e)
                             {
                                 Console.Error.WriteLine(e.Message);
+
+                                using (FileStream fileStream = new FileStream("./webroot/404.html", FileMode.Open))
+                                {
+                                    Dictionary<string, string> responseDict = new Dictionary<string, string>();
+                                    responseDict["Response"] = "HTTP/1.1 404 Not Found";
+                                    responseDict["Connection"] = "Close";
+                                    responseDict["Content-Type"] = "text/html";
+                                    responseDict["Content-Length"] = fileStream.Length.ToString();
+                                    response = GenerateResponseString(responseDict);
+
+                                    data = System.Text.Encoding.ASCII.GetBytes(response);
+                                    netStream.Write(data, 0, data.Length);
+                                    fileStream.CopyTo(netStream);
+                                }
                             }
                         }
                         else
                         {
-                            Dictionary<string, string> responseDict = new Dictionary<string, string>();
-                            responseDict["Response"] = "HTTP/1.1 404 Not Found";
-                            responseDict["Connection"] = "Close";
-                            responseDict["Content-Length"] = "0";
-                            response = GenerateResponseString(responseDict);
+                            using (FileStream fileStream = new FileStream("./webroot/404.html", FileMode.Open))
+                            {
+                                Dictionary<string, string> responseDict = new Dictionary<string, string>();
+                                responseDict["Response"] = "HTTP/1.1 404 Not Found";
+                                responseDict["Connection"] = "Close";
+                                responseDict["Content-Length"] = "0";
+                                response = GenerateResponseString(responseDict);
 
-                            data = System.Text.Encoding.ASCII.GetBytes(response);
-                            netStream.Write(data, 0, data.Length);
+                                data = System.Text.Encoding.ASCII.GetBytes(response);
+                                netStream.Write(data, 0, data.Length);
+                            }
                         }
                     }
                 }
