@@ -14,6 +14,8 @@ namespace myOwnWebServer
         private static readonly string webIPPattern = @"-webIP=([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)";
         private static readonly string webPortPattern = @"-webPort=([0-9]+)";
 
+        private static readonly Logger logger = new Logger("./myOwnWebServer.log");
+
         static void Main(string[] args)
         {
             string webRoot = Regex.Match(args[0], webRootPattern).Groups[1].Value;
@@ -22,6 +24,7 @@ namespace myOwnWebServer
 
             TcpListener server = new TcpListener(IPAddress.Parse(webIP), Convert.ToInt32(webPort));
             server.Start();
+            logger.Write("[SERVER STARTED]", webIP + ":" + webPort);
             while (true)
             {
                 using (TcpClient client = server.AcceptTcpClient())
@@ -34,7 +37,7 @@ namespace myOwnWebServer
                         byte[] data = buffer.Take(readSize).ToArray();
 
                         string request = System.Text.Encoding.ASCII.GetString(data);
-                        Console.WriteLine(request);
+                        logger.Write("[REQUEST]", request);
 
                         Dictionary<string, string> requestDict = ParseRequestHeader(request);
 
@@ -93,11 +96,13 @@ namespace myOwnWebServer
                                     data = System.Text.Encoding.ASCII.GetBytes(response);
                                     netStream.Write(data, 0, data.Length);
                                     fileStream.CopyTo(netStream);
+
+                                    logger.Write("[RESPONSE]", response);
                                 }
                             }
                             catch (IOException e)
                             {
-                                Console.Error.WriteLine(e.Message);
+                                logger.Write("[ERROR]", e.Message);
 
                                 using (FileStream fileStream = new FileStream("./webroot/404.html", FileMode.Open))
                                 {
@@ -113,6 +118,8 @@ namespace myOwnWebServer
                                     data = System.Text.Encoding.ASCII.GetBytes(response);
                                     netStream.Write(data, 0, data.Length);
                                     fileStream.CopyTo(netStream);
+
+                                    logger.Write("[RESPONSE]", response);
                                 }
                             }
                         }
@@ -131,6 +138,8 @@ namespace myOwnWebServer
 
                                 data = System.Text.Encoding.ASCII.GetBytes(response);
                                 netStream.Write(data, 0, data.Length);
+
+                                logger.Write("[RESPONSE]", response);
                             }
                         }
                     }
@@ -162,7 +171,7 @@ namespace myOwnWebServer
                 parts = lines[i].Split(new[] { ": " }, 2, StringSplitOptions.None);
                 if (parts.Length != 2)
                 {
-                    Console.Error.WriteLine("Request message error: {0}", lines[i]);
+                    logger.Write("[ERROR]", lines[i]);
                     continue;
                 }
 
