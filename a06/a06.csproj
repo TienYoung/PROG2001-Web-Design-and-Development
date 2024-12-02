@@ -71,6 +71,7 @@
     <Content Include="MyFiles\test.html" />
     <Content Include="MyFiles\test.txt" />
     <Content Include="startPage.aspx" />
+    <Content Include="styles.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

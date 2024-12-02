@@ -5,22 +5,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>A-06 : JQuery and JSON based text editor</title>
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         function populateFileList() {
             $.getJSON("directoryHandler.ashx", function (data) {
-                $("file_Slt").empty().append('<option value="">-- Select a file --</option>');
+                $("#filename_Slt").empty();
                 data.forEach(filename => {
-                    $("#file_Slt").append(`<option value="${filename}">${filename}</option>`);
+                    $("#filename_Slt").append(`<option value="${filename}">${filename}</option>`);
                 });
             });
         }
 
         function openFile() {
-            $.getJSON("fileHandler.ashx", { filename: $("#file_Slt").val() })
+            $.getJSON("fileHandler.ashx", { filename: $("#filename_Slt").val() })
                 .done(function (data) {
                     $("#editor_Txa").val(data.content);
                     $("#filename_Ipt").val(data.filename);
+
+                    $("#feedback_Pgp").text("");
+                })
+                .fail(function (data) {
+                    $("#feedback_Pgp").text("Open failed");
                 });
         }
 
@@ -31,11 +37,13 @@
                     content: $("#editor_Txa").val()
                 }), "json")
                 .done(function (data) {
+                    $("#feedback_Pgp").text("Saved successfully!");
                 })
                 .fail(function (data) {
+                    $("#feedback_Pgp").text("Save failed!");
                 })
-                .always(function (data, status) {
-
+                .always(function (data) {
+                    populateFileList();
                 });
         }
 
@@ -53,21 +61,18 @@
     </script>
 </head>
 <body>
-    <%--<form id="editor_Form" runat="server">--%>
+    <h1>JQuery Text Edtior</h1>
     <div>
-        <label for="file_Slt">Select a File:</label>
-        <select id="file_Slt">
-            <option value="">-- Select a file --</option>
-        </select>
+        <label for="filename_Slt">Select a File:</label>
+        <select id="filename_Slt"></select>
         <button id="loadFile_Btn">Load File</button>
-        <p id="feedback_Pgp" style="display: none;"></p>
+
+        <label for="filename_Ipt">Save As:</label>
+        <input id="filename_Ipt" type="text"/>
+        <button id="saveFile_Btn">Save File</button>
+
         <textarea id="editor_Txa" rows="20" cols="80"></textarea>
-        <div id="save-options">
-            <label for="save-filename">Save As:</label>
-            <input type="text" id="filename_Ipt" placeholder="Enter filename" />
-            <button id="saveFile_Btn">Save File</button>
-        </div>
+        <p id="feedback_Pgp"></p>
     </div>
-    <%--</form>--%>
 </body>
 </html>

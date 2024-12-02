@@ -30,11 +30,28 @@ namespace a06
                 json.filename = context.Request.QueryString["filename"];
 
                 string filename = Path.Combine(context.Server.MapPath("~/MyFiles"), json.filename);
-                if (File.Exists(filename))
+                if (!File.Exists(filename))
+                {
+                    // File not exist, response No Found.
+                    context.Response.StatusCode = 404;
+                    return;
+                }
+
+                try
                 {
                     json.content = File.ReadAllText(filename);
-                    context.Response.Write(new JavaScriptSerializer().Serialize(json));
                 }
+                catch
+                {                    
+                    // Open failed, response No Found.
+                    context.Response.StatusCode = 404;
+                    return;
+                }
+
+                // Save successfully, response OK.
+                context.Response.StatusCode = 200;
+                context.Response.Write(new JavaScriptSerializer().Serialize(json));
+                return;
             }
             // Save file
             else if (context.Request.HttpMethod == "POST")
@@ -49,12 +66,14 @@ namespace a06
 
                         // Save successfully, response No Content.
                         context.Response.StatusCode = 204;
+                        return;
                     }
                 }
-                catch 
+                catch
                 {
                     // Save failed, response Internal Server Error.
                     context.Response.StatusCode = 500;
+                    return;
                 }
             }
         }
