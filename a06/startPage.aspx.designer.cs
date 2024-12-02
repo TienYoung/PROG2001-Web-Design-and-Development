@@ -15,21 +15,21 @@ namespace a06
     {
 
         /// <summary>
-        /// editorForm control.
+        /// editor_Form control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm editorForm;
+        protected global::System.Web.UI.HtmlControls.HtmlForm editor_Form;
 
         /// <summary>
-        /// txtEditor control.
+        /// editor_Tbx control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEditor;
+        protected global::System.Web.UI.WebControls.TextBox editor_Tbx;
     }
 }
