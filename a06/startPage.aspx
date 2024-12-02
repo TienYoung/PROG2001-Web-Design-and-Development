@@ -20,23 +20,22 @@
             $.getJSON("fileHandler.ashx", { filename: $("#file_Slt").val() })
                 .done(function (data) {
                     $("#editor_Txa").val(data.content);
+                    $("#filename_Ipt").val(data.filename);
                 });
         }
 
         function saveFile() {
             $.post("fileHandler.ashx",
                 JSON.stringify({
-                    filename: $("#file_Slt").val(),
+                    filename: $("#filename_Ipt").val(),
                     content: $("#editor_Txa").val()
                 }), "json")
                 .done(function (data) {
-                    alert("Saved!");
                 })
                 .fail(function (data) {
-                    alert("Save Failed!");
                 })
                 .always(function (data, status) {
-                    alert(status);
+
                 });
         }
 

@@ -13,6 +13,11 @@ namespace a06
     /// </summary>
     public class fileHandler : IHttpHandler
     {
+        private class JsonData
+        {
+            public string filename;
+            public string content;
+        }
 
         public void ProcessRequest(HttpContext context)
         {
@@ -21,34 +26,30 @@ namespace a06
             if (context.Request.HttpMethod == "GET")
             {
                 // Get file name from URL.
-                string filename = context.Request.QueryString["filename"];
+                JsonData json = new JsonData();
+                json.filename = context.Request.QueryString["filename"];
 
-                filename = Path.Combine(context.Server.MapPath("~/MyFiles"), filename);
+                string filename = Path.Combine(context.Server.MapPath("~/MyFiles"), json.filename);
                 if (File.Exists(filename))
                 {
-                    string content = File.ReadAllText(filename);
-                    context.Response.Write(new JavaScriptSerializer().Serialize(new { content = content }));
+                    json.content = File.ReadAllText(filename);
+                    context.Response.Write(new JavaScriptSerializer().Serialize(json));
                 }
             }
             // Save file
             else if (context.Request.HttpMethod == "POST")
             {
-                string filename = null;
-                string content = null;
                 try
                 {
                     using (StreamReader streamReader = new StreamReader(context.Request.InputStream))
                     {
-                        string body = streamReader.ReadToEnd();
-                        dynamic requestData = new JavaScriptSerializer().Deserialize<dynamic>(body);
-                        filename = requestData["filename"];
-                        content = requestData["content"];
-                    }
-                    filename = Path.Combine(context.Server.MapPath("~/MyFiles"), filename);
-                    File.WriteAllText(filename, content);
+                        JsonData json = new JavaScriptSerializer().Deserialize<JsonData>(streamReader.ReadToEnd());
+                        string filename = Path.Combine(context.Server.MapPath("~/MyFiles"), json.filename);
+                        File.WriteAllText(filename, json.content);
 
-                    // Save successfully, response No Content.
-                    context.Response.StatusCode = 204;
+                        // Save successfully, response No Content.
+                        context.Response.StatusCode = 204;
+                    }
                 }
                 catch 
                 {
