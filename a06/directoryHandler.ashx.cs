@@ -27,9 +27,7 @@ namespace a06
             }
 
             // Convert object to JSON string.
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string json = serializer.Serialize(files);
-            context.Response.Write(json);
+            context.Response.Write(new JavaScriptSerializer().Serialize(files));
         }
 
         public bool IsReusable => false;

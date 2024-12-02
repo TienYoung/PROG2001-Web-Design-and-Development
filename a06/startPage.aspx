@@ -16,10 +16,27 @@
             });
         }
 
-        function openFile(name) {
-            $.getJSON("fileHandler.ashx", { filename: name })
+        function openFile() {
+            $.getJSON("fileHandler.ashx", { filename: $("#file_Slt").val() })
                 .done(function (data) {
                     $("#editor_Txa").val(data.content);
+                });
+        }
+
+        function saveFile() {
+            $.post("fileHandler.ashx",
+                JSON.stringify({
+                    filename: $("#file_Slt").val(),
+                    content: $("#editor_Txa").val()
+                }), "json")
+                .done(function (data) {
+                    alert("Saved!");
+                })
+                .fail(function (data) {
+                    alert("Save Failed!");
+                })
+                .always(function (data, status) {
+                    alert(status);
                 });
         }
 
@@ -27,27 +44,31 @@
             populateFileList();
 
             $("#loadFile_Btn").on("click", function () {
-                openFile($("#file_Slt").val());
+                openFile();
+            });
+
+            $("#saveFile_Btn").on("click", function () {
+                saveFile();
             });
         });
     </script>
 </head>
 <body>
     <%--<form id="editor_Form" runat="server">--%>
-        <div>
-            <label for="file_Slt">Select a File:</label>
-            <select id="file_Slt">
-                <option value="">-- Select a file --</option>
-            </select>
-            <button id="loadFile_Btn">Load File</button>
-            <p id="feedback_Pgp" style="display: none;"></p>
-            <textarea id="editor_Txa" rows="20" cols="80"></textarea>
-<%--            <div id="save-options">
-                <label for="save-filename">Save As:</label>
-                <input type="text" id="save-filename" placeholder="Enter filename">
-                <button id="save-file">Save File</button>
-            </div>--%>
+    <div>
+        <label for="file_Slt">Select a File:</label>
+        <select id="file_Slt">
+            <option value="">-- Select a file --</option>
+        </select>
+        <button id="loadFile_Btn">Load File</button>
+        <p id="feedback_Pgp" style="display: none;"></p>
+        <textarea id="editor_Txa" rows="20" cols="80"></textarea>
+        <div id="save-options">
+            <label for="save-filename">Save As:</label>
+            <input type="text" id="filename_Ipt" placeholder="Enter filename" />
+            <button id="saveFile_Btn">Save File</button>
         </div>
+    </div>
     <%--</form>--%>
 </body>
 </html>
