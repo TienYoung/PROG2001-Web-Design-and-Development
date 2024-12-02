@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*
+ * FILE          : fileHandler.ashx.cs
+ * PROJECT       : PROG2001 - Assignment #6
+ * PROGRAMMER    : Tian Yang
+ * FIRST VERSION : 2024-12-02
+ * DESCRIPTION   :
+ *   This file defines the fileHandler class, an HTTP handler that processes requests for
+ *   file operations. It supports two main functionalities:
+ *   - GET: Retrieves the content of a specified file in JSON format.
+ *   - POST: Saves content to a specified file, creating or overwriting it.
+ *   The handler responds with appropriate HTTP status codes based on the success or failure
+ *   of the operation.
+ */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,9 +21,14 @@ using System.Web.UI.WebControls;
 
 namespace a06
 {
-    /// <summary>
-    /// Summary description for fileHandler
-    /// </summary>
+    /*
+     * NAME : fileHandler
+     * PURPOSE :
+     *   The fileHandler class implements the IHttpHandler interface and provides file
+     *   manipulation functionalities. It handles HTTP GET requests to retrieve file content
+     *   and POST requests to save content to a file. This class ensures appropriate error
+     *   handling and JSON-based responses.
+     */
     public class fileHandler : IHttpHandler
     {
         private class JsonData
