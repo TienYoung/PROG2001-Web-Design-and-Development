@@ -13,23 +13,5 @@ namespace a06
 
     public partial class startPage
     {
-
-        /// <summary>
-        /// editor_Form control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm editor_Form;
-
-        /// <summary>
-        /// editor_Tbx control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox editor_Tbx;
     }
 }
