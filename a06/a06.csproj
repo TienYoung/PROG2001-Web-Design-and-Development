@@ -68,8 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="MyFiles\test.html" />
-    <Content Include="MyFiles\test.txt" />
     <Content Include="startPage.aspx" />
     <Content Include="styles.css" />
     <Content Include="Web.config" />
@@ -107,6 +105,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="MyFiles\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
