@@ -67,10 +67,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Page2.aspx" />
+    <Content Include="Styles.css" />
     <Content Include="Web.config" />
     <Content Include="Page1.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Page2.aspx.cs">
+      <DependentUpon>Page2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Page2.aspx.designer.cs">
+      <DependentUpon>Page2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PizzaShop.Master.cs">
       <DependentUpon>PizzaShop.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
