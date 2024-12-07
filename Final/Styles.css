@@ -1,3 +1,23 @@
 ﻿.custom-checkbox-list input[type="checkbox"] {
     display: none; 
 }
+
+.custom-checkbox-list label {
+    display: inline-block;
+    position: relative;
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.custom-checkbox-list img {
+    width: 100px;
+    height: 100px;
+    border: 2px solid transparent; /* 默认无边框 */
+    border-radius: 8px; /* 圆角边框，可选 */
+    transition: border-color 0.3s ease; /* 添加动画效果 */
+}
+
+.custom-checkbox-list input[type="checkbox"]:checked + label img {
+    border: 2px solid #007bff; /* 选中后的边框颜色 */
+}
