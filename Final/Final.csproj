@@ -70,6 +70,8 @@
     <Content Include="images\mushrooms.jpg" />
     <Content Include="images\pepperoni.jpg" />
     <Content Include="Page2.aspx" />
+    <Content Include="Page3.aspx" />
+    <Content Include="Page4.aspx" />
     <Content Include="Styles.css" />
     <Content Include="Web.config" />
     <Content Include="Page1.aspx" />
@@ -81,6 +83,20 @@
     </Compile>
     <Compile Include="Page2.aspx.designer.cs">
       <DependentUpon>Page2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Page3.aspx.cs">
+      <DependentUpon>Page3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Page3.aspx.designer.cs">
+      <DependentUpon>Page3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Page4.aspx.cs">
+      <DependentUpon>Page4.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Page4.aspx.designer.cs">
+      <DependentUpon>Page4.aspx</DependentUpon>
     </Compile>
     <Compile Include="PizzaShop.Master.cs">
       <DependentUpon>PizzaShop.Master</DependentUpon>

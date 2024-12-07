@@ -1,4 +1,14 @@
-﻿.custom-checkbox-list input[type="checkbox"] {
+﻿h1 {
+    margin: auto;
+    text-align: center
+}
+
+h2 {
+    margin: auto;
+    text-align: center
+}
+
+.custom-checkbox-list input[type="checkbox"] {
     display: none; 
 }
 
@@ -13,11 +23,11 @@
 .custom-checkbox-list img {
     width: 100px;
     height: 100px;
-    border: 2px solid transparent; /* 默认无边框 */
-    border-radius: 8px; /* 圆角边框，可选 */
-    transition: border-color 0.3s ease; /* 添加动画效果 */
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
 }
 
 .custom-checkbox-list input[type="checkbox"]:checked + label img {
-    border: 2px solid #007bff; /* 选中后的边框颜色 */
+    border: 2px solid #007bff;
 }

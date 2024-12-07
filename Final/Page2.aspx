@@ -1,8 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PizzaShop.Master" AutoEventWireup="true" CodeBehind="Page2.aspx.cs" Inherits="Final.Page2" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <asp:CheckBoxList ID="cblTopping" runat="Server" AutoPostBack="true" CssClass="custom-checkbox-list">
         <asp:ListItem Text="<img src='images/pepperoni.jpg' alt='Pepperoni'/>" Value="Pepperoni" />
         <asp:ListItem Text="<img src='images/mushrooms.jpg' alt='Mushrooms'/>" Value="Mushrooms"/>
