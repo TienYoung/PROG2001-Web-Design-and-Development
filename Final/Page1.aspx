@@ -19,5 +19,13 @@
             ForeColor="Red"
             Display="Dynamic">
         </asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator
+            ID="revUserName"
+            runat="server"
+            ControlToValidate="txtUserName"
+            ErrorMessage="Your name <b>cannot</b> be BLANK and is comprised of alphabetic letters."
+            ForeColor="Red"
+            ValidationExpression="^(?!\s+$)[a-zA-Z ]+$">
+        </asp:RegularExpressionValidator>
     </p>
 </asp:Content>
