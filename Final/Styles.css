@@ -8,11 +8,18 @@ h2 {
     text-align: center
 }
 
-.custom-checkbox-list input[type="checkbox"] {
-    display: none; 
+.image-pizza {
+    display: block;
+    margin: auto;
+    width: 200px;
+    height: 200px;
 }
 
-.custom-checkbox-list label {
+.checkbox-list-topping input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-list-topping label {
     display: inline-block;
     position: relative;
     margin: 10px;
@@ -20,7 +27,7 @@ h2 {
     cursor: pointer;
 }
 
-.custom-checkbox-list img {
+.checkbox-list-topping img {
     width: 100px;
     height: 100px;
     border: 2px solid transparent;
@@ -28,6 +35,6 @@ h2 {
     transition: border-color 0.3s ease;
 }
 
-.custom-checkbox-list input[type="checkbox"]:checked + label img {
+.checkbox-list-topping input[type="checkbox"]:checked + label img {
     border: 2px solid #007bff;
 }

@@ -67,8 +67,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\double_cheese.jpg" />
+    <Content Include="images\green_olives.jpg" />
+    <Content Include="images\green_peppers.jpg" />
     <Content Include="images\mushrooms.jpg" />
     <Content Include="images\pepperoni.jpg" />
+    <Content Include="images\pizza.jpg" />
     <Content Include="Page2.aspx" />
     <Content Include="Page3.aspx" />
     <Content Include="Page4.aspx" />

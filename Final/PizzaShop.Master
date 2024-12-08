@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>SET Pizza Shop</h1>
-    <h2 id="hdgWelcome" runat="server" />
+    <h2 id="hdgGreeting" runat="server" />
     <form runat="server">
         <div>
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
