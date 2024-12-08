@@ -8,19 +8,19 @@
             <asp:CheckBoxList ID="cblTopping" runat="Server"
                 AutoPostBack="true" OnSelectedIndexChanged="cblTopping_SelectedIndexChanged"
                 CssClass="checkbox-list-topping" RepeatDirection="Horizontal">
-                <asp:ListItem Text="Pepperoni" Value="1.5" >
+                <asp:ListItem Value="Pepperoni">
                     <img src='images/pepperoni.jpg' alt='Pepperoni'/>
                 </asp:ListItem>
-                <asp:ListItem Text="Mushrooms" Value="1.0">
+                <asp:ListItem Value="Mushrooms">
                     <img src='images/mushrooms.jpg' alt='Mushrooms'/>
                 </asp:ListItem>
-                <asp:ListItem Text="Green Olives" Value="1.0">
+                <asp:ListItem Value="Green Olives">
                     <img src='images/green_olives.jpg' alt='Green Olives'/>
                 </asp:ListItem>
-                <asp:ListItem Text="Green Peppers" Value="1.0">
+                <asp:ListItem Value="Green Peppers">
                     <img src='images/green_peppers.jpg' alt='Green Peppers'/>
                 </asp:ListItem>
-                <asp:ListItem Text="Double Cheese" Value="2.25">
+                <asp:ListItem Value="Double Cheese">
                     <img src='images/double_cheese.jpg' alt='Double Cheese'/>
                 </asp:ListItem>
             </asp:CheckBoxList>

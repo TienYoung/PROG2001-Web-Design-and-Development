@@ -38,3 +38,16 @@ h2 {
 .checkbox-list-topping input[type="checkbox"]:checked + label img {
     border: 2px solid #007bff;
 }
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.total-price {
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+}

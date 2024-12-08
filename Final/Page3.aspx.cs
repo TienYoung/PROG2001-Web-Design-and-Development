@@ -9,15 +9,29 @@ namespace Final
 {
     public partial class Page3 : System.Web.UI.Page
     {
+        private class Item
+        {
+            public string Name { get; set; }
+            public string Price { get; set; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            string[] items = Request.QueryString.GetValues("item");
-            foreach (string topping in items)
+            float totalPrice = 0.0f;
+            string[] itemStrings = Request.QueryString.GetValues("item");
+            List<Item> items = new List<Item>();
+            foreach (string topping in itemStrings)
             {
                 string name = topping.Split(',')[0];
                 string price = topping.Split(',')[1];
-                Response.Write($"Name: {name}, Price: {price}");
+                items.Add(new Item { Name = name, Price = price });
+
+                totalPrice += Convert.ToSingle(price);
             }
+            rptItemList.DataSource = items;
+            rptItemList.DataBind();
+
+            lblTotalPrice.Text = "$ " + totalPrice.ToString("F2");
         }
 
         protected void btnConfirm_Click(object sender, EventArgs e)
