@@ -11,7 +11,7 @@ namespace Final
     public partial class Page2 : System.Web.UI.Page
     {
         private float totalPrice = 10.0f; // The base price for the pizza (no toppings) is $ 10.00
-        private string toppings = "item=Pizza (with sauce and cheese),10.0";
+        private string toppings = "item=Pizza (includes sauce and cheese),10.00";
 
         protected void Page_Load(object sender, EventArgs e)
         {
