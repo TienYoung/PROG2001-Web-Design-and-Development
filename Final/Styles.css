@@ -1,47 +1,149 @@
-﻿h1 {
+﻿body {
+    background-color: lightpink;
+    font-family: 'Rubik'
+}
+
+h1 {
     margin: auto;
-    text-align: center
+    padding: 30px;
+    text-align: center;
+    color: white;
+    background-color: orange;
+    border-radius: 32px;
+    width: 38.2%;
+    font-weight: bold;
 }
 
 h2 {
-    margin: auto;
-    text-align: center
-}
-
-.image-pizza {
-    display: block;
-    margin: auto;
-    width: 200px;
-    height: 200px;
-}
-
-.checkbox-list-topping input[type="checkbox"] {
-    display: none;
-}
-
-.checkbox-list-topping label {
-    display: inline-block;
-    position: relative;
-    margin: 10px;
+    margin: 30px auto;
     text-align: center;
-    cursor: pointer;
 }
 
-.checkbox-list-topping img {
-    width: 100px;
-    height: 100px;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    transition: border-color 0.3s ease;
+h3 {
+    margin: auto;
+    text-align: center;
 }
 
-.checkbox-list-topping input[type="checkbox"]:checked + label img {
-    border: 2px solid #007bff;
+.input-container {
+    margin: 50px auto auto auto;
+    width: 300px;
+    padding: 10px;
+    text-align: center;
+}
+
+    .input-container input[type="text"] {
+        width: 50%;
+    }
+
+    .input-container input[type="submit"] {
+        background-color: antiquewhite;
+        border-radius: 4px;
+        border-width: 0px;
+        width: 20%;
+        height: 20px;
+        font-family: "Rubik";
+    }
+
+.input-feedback {
+    margin: auto;
+    text-align: center;
+}
+
+    .input-feedback span {
+        display: block;
+    }
+
+.pizza {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .pizza img {
+        margin: 10px;
+        border-radius: 16px;
+        width: 200px;
+        height: 200px;
+    }
+
+    .pizza p {
+        margin: 10px;
+        width: 400px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        font-style: italic;
+    }
+
+        .pizza p span:last-child {
+            position: absolute;
+            bottom: 0;
+            font-weight: bold;
+        }
+
+
+.checkbox-list-topping {
+    display: flex;
+    justify-content: center;
+}
+
+    .checkbox-list-topping input[type="checkbox"] {
+        display: none;
+    }
+
+    .checkbox-list-topping label {
+        display: inline-block;
+        position: relative;
+        margin: 10px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .checkbox-list-topping img {
+        width: 100px;
+        height: 100px;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        transition: border-color 0.3s ease;
+    }
+
+    .checkbox-list-topping p {
+        margin: auto;
+    }
+
+    .checkbox-list-topping input[type="checkbox"]:checked + label img {
+        border: 2px solid #005aff;
+    }
+
+.make-it {
+    margin: 60px;
+    text-align: center;
+}
+    .make-it span {
+        font-weight: bold;
+    }
+
+    .make-it input[type="submit"] {
+        background-color: antiquewhite;
+        margin: 20px;
+        border-radius: 16px;
+        border-width: 0px;
+        width: 100px;
+        height: 50px;
+        font-family: "Rubik";
+        font-size: 16px;
+    }
+
+.item-list {
+    text-align: center;
 }
 
 .item-row {
     display: flex;
     justify-content: space-between;
+    width: 50%; 
+    margin: 0 auto; 
     padding: 8px 0;
     border-bottom: 1px solid #ddd;
 }
@@ -51,3 +153,18 @@ h2 {
     text-align: right;
     margin-top: 10px;
 }
+
+.buttons {
+    text-align: center;
+}
+
+    .buttons input[type="submit"] {
+        background-color: antiquewhite;
+        margin: 20px;
+        border-radius: 16px;
+        border-width: 0px;
+        width: 100px;
+        height: 50px;
+        font-family: "Rubik";
+        font-size: 16px;
+    }

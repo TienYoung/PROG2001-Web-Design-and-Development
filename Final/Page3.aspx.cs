@@ -31,7 +31,7 @@ namespace Final
             rptItemList.DataSource = items;
             rptItemList.DataBind();
 
-            lblTotalPrice.Text = "$ " + totalPrice.ToString("F2");
+            lblTotalPrice.Text = "TOTAL: $ " + totalPrice.ToString("F2");
         }
 
         protected void btnConfirm_Click(object sender, EventArgs e)

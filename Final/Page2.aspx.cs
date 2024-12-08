@@ -1,4 +1,4 @@
-﻿using System; 
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,14 +10,15 @@ namespace Final
 {
     public partial class Page2 : System.Web.UI.Page
     {
-        private float totalPrice= 10.0f; // The base price for the pizza (no toppings) is $ 10.00
-        private string toppings = "item=pizza(sauce and cheese),10.0";
+        private float totalPrice = 10.0f; // The base price for the pizza (no toppings) is $ 10.00
+        private string toppings = "item=Pizza (with sauce and cheese),10.0";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
 
             ViewState["toppings"] = toppings;
+            lblPrice.Text = "TOTAL: $ " + totalPrice.ToString("F2");
         }
 
         protected void btnMakeIt_Click(object sender, EventArgs e)
@@ -56,7 +57,7 @@ namespace Final
                     totalPrice += price;
                 }
             }
-            lblPrice.Text = "Price: $" + totalPrice;
+            lblPrice.Text = "TOTAL: $ " + totalPrice.ToString("F2");
         }
     }
 }

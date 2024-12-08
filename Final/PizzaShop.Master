@@ -6,6 +6,7 @@
 <head runat="server">
     <title>WDD - Final Exam</title>
     <link rel="stylesheet" href="Styles.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>SET Pizza Shop</h1>
